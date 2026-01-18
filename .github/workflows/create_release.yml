@@ -50,7 +50,7 @@ jobs:
       - name: Fetch latest release information
         id: get-release
         run: |
-          RESPONSE=$(curl -s "${{ env.GITHUB_API_URL }}")
+          RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "${{ env.GITHUB_API_URL }}")
           if [ -z "$RESPONSE" ]; then
             echo "Error: Failed to fetch release data!"
             exit 1
