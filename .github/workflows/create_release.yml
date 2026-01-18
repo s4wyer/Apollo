@@ -19,7 +19,7 @@ env:
   CATBOX_UPLOAD: ${{ inputs.catbox_upload == 'false' }}
   GITHUB_API_URL: "https://api.github.com/repos/JeffreyCA/Apollo-ImprovedCustomApi/releases/latest"
   PYZULE_RW_URL: "https://github.com/asdfzxcvbn/pyzule-rw/archive/main.zip"
-
+  
 permissions:
   contents: write
 
@@ -52,11 +52,10 @@ jobs:
 
       - name: Fetch latest release information
         id: get-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "${{ env.GITHUB_API_URL }}")
-
-          echo $RESPONSE
-          
+          RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" "${{ env.GITHUB_API_URL }}")          
           if [ -z "$RESPONSE" ]; then
             echo "Error: Failed to fetch release data!"
             exit 1
